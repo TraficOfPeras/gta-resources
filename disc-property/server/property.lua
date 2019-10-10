@@ -35,6 +35,19 @@ AddEventHandler('disc-property:GiveKeys', function(property, identifier)
     })
 end)
 
+RegisterServerEvent('disc-property:trancarProperty')
+AddEventHandler('disc-property:trancarProperty', function(property, info)
+	if info == 1 then
+		MySQL.Async.execute('UPDATE disc_property SET locked = 1 WHERE name = @name', {
+			['@name'] = property.name
+		})
+	elseif info == 2 then
+		MySQL.Async.execute('UPDATE disc_property SET locked = 0 WHERE name = @name', {
+			['@name'] = property.name
+		})
+	end
+end)
+
 RegisterServerEvent('disc-property:TakeKeys')
 AddEventHandler('disc-property:TakeKeys', function(property, identifier)
     MySQL.Async.execute('DELETE FROM disc_property_owners WHERE name = @name and identifier = @identifier', {

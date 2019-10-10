@@ -59,7 +59,7 @@ Citizen.CreateThread(function()
             end,
             property = property,
             shouldDraw = function()
-                return IsPropertySold(property) and DoesPlayerHaveKeysOf(property)
+                return not IsUnlocked(property) or (IsPropertySold(property) and DoesPlayerHaveKeysOf(property))
             end
         }
         TriggerEvent('disc-base:registerMarker', marker)
